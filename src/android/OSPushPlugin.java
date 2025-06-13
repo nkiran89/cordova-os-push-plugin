@@ -20,7 +20,6 @@ public class OSPushPlugin extends CordovaPlugin {
             this.executeBackgroundLogic(callbackContext);
             callbackContext.success();
             return true;
-            return true;
         }
         return false;
     }
