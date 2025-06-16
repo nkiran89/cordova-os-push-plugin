@@ -1,0 +1,10 @@
+{
+  "@havesource/cordova-plugin-push": {
+    "source": {
+      "type": "registry",
+      "id": "github:havesource/cordova-plugin-push"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
+}
