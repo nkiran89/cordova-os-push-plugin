@@ -8,3 +8,4 @@ module.exports = function (ctx) {
     console.log("RUNNING HOOK NOW!");    
     throw new Error(`OUTSYSTEMS_PLUGIN_ERROR: Error occurred on ${ctx.hook}`)
 };
+

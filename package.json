@@ -11,11 +11,13 @@
   "description": "",
   "devDependencies": {
     "@havesource/cordova-plugin-push": "github:havesource/cordova-plugin-push",
+    "cordova-plugin-background-fetch": "^7.2.4",
     "cordova-plugin-push": "^0.0.1"
   },
   "cordova": {
     "plugins": {
-      "@havesource/cordova-plugin-push": {}
+      "@havesource/cordova-plugin-push": {},
+      "cordova-plugin-background-fetch": {}
     }
   }
 }

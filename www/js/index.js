@@ -19,15 +19,23 @@
 
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
-document.addEventListener('deviceready', onDeviceReady, false);
+ document.addEventListener('deviceready', onDeviceReady, false);
 
-function onDeviceReady() {
+async function onDeviceReady() {
     // Cordova is now initialized. Have fun!
 
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
-    //document.getElementById('deviceready').classList.add('ready');
 
-     var push = PushNotification.init({
+    var BackgroundFetch = window.BackgroundFetch;
+
+    // Your BackgroundFetch event handler.
+    var onEvent = async function(taskId) {
+        console.log('[BackgroundFetch] event received: ', taskId);
+        // Required: Signal completion of your task to native code
+        // If you fail to do this, the OS can terminate your app
+        // or assign battery-blame for consuming too much background-time
+
+        var push = PushNotification.init({
             android: {
                 senderID: "981095981184" // Replace with your Firebase Sender ID
             },
@@ -52,4 +60,41 @@ function onDeviceReady() {
          push.on('error', function(e) {
             console.log("Push error: " + e.message);
         });
+        
+        BackgroundFetch.finish(taskId);
+    };
+
+    // Timeout callback is executed when your Task has exceeded its allowed running-time.
+    // You must stop what you're doing immediately BackgroundFetch.finish(taskId)
+    var onTimeout = async function(taskId) {
+        console.log('[BackgroundFetch] TIMEOUT: ', taskId);
+        BackgroundFetch.finish(taskId);
+    };
+
+    var status = await BackgroundFetch.configure({
+        minimumFetchInterval: 15,
+        stopOnTerminate : false
+    }, onEvent, onTimeout);
+
+    console.log('[BackgroundFetch] configure status: ', status);
+
+    //document.getElementById('deviceready').classList.add('ready');
+
+     
 }
+
+// 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
